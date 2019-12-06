@@ -1,1 +1,1 @@
-# linux-manual-pages-plugin
+# Linux-manual-pages-plugin
