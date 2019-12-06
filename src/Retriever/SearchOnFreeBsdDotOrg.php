@@ -5,6 +5,7 @@ namespace AsyncBot\Plugin\LinuxManualPages\Retriever;
 use Amp\Promise;
 use AsyncBot\Core\Http\Client;
 use AsyncBot\Plugin\LinuxManualPages\Parser\FreeBsdDotOrg;
+use AsyncBot\Plugin\LinuxManualPages\ValueObject\ManualPage;
 use function Amp\call;
 
 final class SearchOnFreeBsdDotOrg
@@ -16,6 +17,9 @@ final class SearchOnFreeBsdDotOrg
         $this->httpClient = $httpClient;
     }
 
+    /**
+     * @return Promise<ManualPage|null>
+     */
     public function retrieve(string $command): Promise
     {
         return call(function () use ($command) {

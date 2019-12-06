@@ -2,9 +2,11 @@
 
 namespace AsyncBot\Plugin\LinuxManualPages\Parser;
 
+use AsyncBot\Plugin\LinuxManualPages\ValueObject\ManualPage;
+
 final class FreeBsdDotOrg
 {
-    public function parse(\DOMDocument $dom)
+    public function parse(\DOMDocument $dom): ?ManualPage
     {
         $xpath = new \DOMXPath($dom);
 
@@ -12,12 +14,12 @@ final class FreeBsdDotOrg
             return null;
         }
 
-        return [
-            'name'        => $this->getName($xpath),
-            'shortDescription' => $this->getShortDescription($xpath),
-            'longDescription'  => $this->getLongDescription($xpath),
-            'synopsis'    => $this->getSynopsis($xpath),
-        ];
+        return new ManualPage(
+            $this->getName($xpath),
+            $this->getShortDescription($xpath),
+            $this->getLongDescription($xpath),
+            $this->getSynopsis($xpath),
+        );
     }
 
     private function isCommandFound(\DOMXPath $xpath): bool
