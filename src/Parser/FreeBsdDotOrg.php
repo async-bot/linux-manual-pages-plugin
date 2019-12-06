@@ -2,6 +2,7 @@
 
 namespace AsyncBot\Plugin\LinuxManualPages\Parser;
 
+use AsyncBot\Plugin\LinuxManualPages\Exception\UnexpectedHtmlFormat;
 use AsyncBot\Plugin\LinuxManualPages\ValueObject\ManualPage;
 
 final class FreeBsdDotOrg
@@ -29,21 +30,44 @@ final class FreeBsdDotOrg
 
     private function getName(\DOMXPath $xpath): string
     {
-        return ltrim($xpath->evaluate('//a[@name="NAME"]/following-sibling::b/text()')->item(0)->textContent);
+        /** @var \DOMNodeList $nameNodes */
+        $nameNodes = $xpath->evaluate('//a[@name="NAME"]/following-sibling::b/text()');
+
+        if (!$nameNodes->length) {
+            throw new UnexpectedHtmlFormat('name');
+        }
+
+        return ltrim($nameNodes->item(0)->textContent);
     }
 
     private function getShortDescription(\DOMXPath $xpath): string
     {
-        $description = $xpath->evaluate('//a[@name="NAME"]/following-sibling::b/following-sibling::text()')->item(0)->textContent;
+        /** @var \DOMNodeList $nameNodes */
+        $descriptionNodes = $xpath->evaluate('//a[@name="NAME"]/following-sibling::b/following-sibling::text()');
 
-        return $this->trimDescription($description);
+        if (!$descriptionNodes->length) {
+            throw new UnexpectedHtmlFormat('short description');
+        }
+
+        return $this->trimDescription($descriptionNodes->item(0)->textContent);
     }
 
     private function getLongDescription(\DOMXPath $xpath): string
     {
-        $description = '';
+        /** @var \DOMNodeList $nameNodes */
+        $descriptionNodes = $xpath->evaluate('//a[@name="DESCRIPTION"]');
 
-        $currentNode = $xpath->evaluate('//a[@name="DESCRIPTION"]')->item(0)->nextSibling;
+        if (!$descriptionNodes->length) {
+            throw new UnexpectedHtmlFormat('long description');
+        }
+
+        $currentNode = $descriptionNodes->item(0)->nextSibling;
+
+        if ($currentNode === null) {
+            throw new UnexpectedHtmlFormat('long description start node');
+        }
+
+        $description = '';
 
         while ($this->isPartOfLongDescription($currentNode)) {
             $description .= sprintf(' %s', trim($currentNode->textContent));
@@ -69,12 +93,24 @@ final class FreeBsdDotOrg
 
     private function getSynopsis(\DOMXPath $xpath): string
     {
+        /** @var \DOMNodeList $nameNodes */
+        $synopsisNodes = $xpath->evaluate('//a[@name="SYNOPSIS"]/following-sibling::b');
+
+        if (!$synopsisNodes->length) {
+            throw new UnexpectedHtmlFormat('synopsis');
+        }
+
+        $currentNode = $synopsisNodes->item(0);
+
+        if ($currentNode === null) {
+            throw new UnexpectedHtmlFormat('synopsis start node');
+        }
+
         $synopsis = '';
 
-        $currentNode = $xpath->evaluate("//a[@name='SYNOPSIS']/following-sibling::b")->item(0);
-
         while (!property_exists($currentNode, 'tagName') || $currentNode->tagName !== 'a') {
-            $synopsis .= " " . trim($currentNode->textContent);
+            $synopsis .= sprintf(' %s', trim($currentNode->textContent));
+
             $currentNode = $currentNode->nextSibling;
         }
 

@@ -10,4 +10,4 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 $plugin = new Plugin(new Client(HttpClientBuilder::buildDefault()));
 
-var_dump(wait($plugin->search('updatedb')));
+var_dump(wait($plugin->search('locate')));
