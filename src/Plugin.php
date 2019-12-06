@@ -4,6 +4,7 @@ namespace AsyncBot\Plugin\LinuxManualPages;
 
 use Amp\Promise;
 use AsyncBot\Core\Http\Client;
+use AsyncBot\Plugin\LinuxManualPages\Retriever\SearchOnFreeBsdDotOrg;
 
 final class Plugin
 {
@@ -16,6 +17,6 @@ final class Plugin
 
     public function search(string $keywords): Promise
     {
-
+        return (new SearchOnFreeBsdDotOrg($this->httpClient))->retrieve($keywords);
     }
 }
