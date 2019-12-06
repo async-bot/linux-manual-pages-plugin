@@ -94,13 +94,13 @@ final class FreeBsdDotOrg
     private function getSynopsis(\DOMXPath $xpath): string
     {
         /** @var \DOMNodeList $nameNodes */
-        $synopsisNodes = $xpath->evaluate('//a[@name="SYNOPSIS"]/following-sibling::b');
+        $synopsisNodes = $xpath->evaluate('//a[@name="SYNOPSIS"]');
 
         if (!$synopsisNodes->length) {
             throw new UnexpectedHtmlFormat('synopsis');
         }
 
-        $currentNode = $synopsisNodes->item(0);
+        $currentNode = $xpath->evaluate('//a[@name="SYNOPSIS"]/following-sibling::b')->item(0);
 
         if ($currentNode === null) {
             throw new UnexpectedHtmlFormat('synopsis start node');
@@ -120,7 +120,7 @@ final class FreeBsdDotOrg
     private function trimDescription(string $description): string
     {
         $description = str_replace(["\r\n", "\r", "\n"], ' ', $description);
-        $description = trim($description, ' -');
+        $description = trim($description, " \t\n\r\0\x0B-");
         $description = preg_replace('/\s+/', ' ', $description);
 
         return $description;

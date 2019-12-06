@@ -1,0 +1,660 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta name="robots" content="nofollow" />
+    <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+    <link rel="search" type="application/opensearchdescription+xml" href="https://www.freebsd.org/search/opensearch/man.xml" title="FreeBSD Manpages" />
+    <link rel="search" type="application/opensearchdescription+xml" href="https://www.freebsd.org/search/opensearch/man-freebsd-release-ports.xml" title="FreeBSD + Ports Manpages" />
+    <style type="text/css">
+        <!--
+        b { color: #996600; }
+        i { color: #008000; }
+        -->
+        span.footer_links { font-size: small; }
+        span.space { font-size: xx-small; }
+        form#man > input, form#man > button { font-size: large; }
+        form#man > input[name='query'] { text-align: center; }
+
+        @media only screen and (max-height: 640px), (max-width: 760px) {
+            div#header, div#menu { display: none !important; }
+            div#content { padding-top: 4.9em; }
+            form#man > input, button { font-size: 200%; }
+            form#man > button { font-size: 200%; }
+            form#man > input[name='query'] { width: 12em; }
+            form#man > select { font-size: 140%; }
+            span.spaces { display: none; }
+        }
+    </style>
+    <title>updatedb</title>
+    <meta http-equiv='content-type' content='text/html; charset=iso-8859-1' />
+    <meta name='robots' content='nofollow' />
+    <link rel="stylesheet" media="screen"
+          href="../layout/css/fixed.css" type="text/css"
+          title="Normal Text" />
+    <link rel="alternate stylesheet" media="screen"
+          href="../layout/css/fixed_large.css" type="text/css"
+          title="Large Text" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/favicon.ico" type="image/x-icon" />
+
+    <script type="text/javascript" src="../layout/js/google.js">
+    </script>
+
+</head>
+<body>
+
+<div id="containerwrap">
+    <div id="container">
+        <span class="txtoffscreen"><a href="#content"
+                                      title="Skip site navigation" accesskey="1">Skip site
+        navigation</a> (1)</span><span class="txtoffscreen"><a
+            href="#content" title="Skip section navigation"
+            accesskey="2">Skip section navigation</a> (2)</span>
+
+        <div id="headercontainer">
+            <div id="header">
+                <h2 class="blockhide">Header And Logo</h2>
+
+                <div id="headerlogoleft">
+                    <a href=".." title="FreeBSD"><img
+                            src="../layout/images/logo-red.png" width="457"
+                            height="75" alt="FreeBSD" /></a>
+                </div>
+
+                <div id="headerlogoright">
+                    <h2 class="blockhide">Peripheral Links</h2>
+
+                    <div class="frontdonateroundbox">
+                        <div class="frontdonatetop">
+                            <div>
+                                <b style="display: none;">.</b>
+                            </div>
+                        </div>
+                        <div class="frontdonatecontent">
+                            <a href="https://www.FreeBSDFoundation.org/donate/">Donate to FreeBSD</a>
+                        </div>
+                        <div class="frontdonatebot">
+                            <div>
+                                <b style="display: none;">.</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="search">
+                        <form method="get" id="search" action="https://duckduckgo.com/">
+                            <h2 class="blockhide"><label for="words">Search</label></h2>
+                            <input type="hidden" name="sites" value="www.FreeBSD.org,docs.FreeBSD.org,lists.FreeBSD.org,wiki.FreeBSD.org,forums.FreeBSD.org" />
+                            <input type="hidden" name="ka" value="v" />
+                            <input type="hidden" name="kt" value="v" />
+                            <input type="hidden" name="kh" value="1" />
+                            <input type="hidden" name="kj" value="r2" />
+                            <input id="words" name="q" type="text" size="20"
+                                   autocapitalize="none"
+                                   maxlength="255"
+                                   onfocus="if( this.value==this.defaultValue ) this.value='';"
+                                   value="Search" />
+                            <span>&nbsp;</span>
+                            <input id="submit" name="submit" type="submit" value="Search" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="blockhide">Site Navigation</h2>
+
+            <div id="menu">
+                <ul class="first">
+                    <li><a href="../">Home</a></li>
+                </ul>
+                <ul>
+                    <li><a href="../about.html">About</a>
+                        <ul>
+                            <li><a href="../projects/newbies.html">Introduction</a></li>
+                            <li><a href="../features.html">Features</a></li>
+                            <li><a href="../advocacy/">Advocacy</a></li>
+                            <li><a href="../marketing/">Marketing</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li><a href="../where.html">Get FreeBSD</a>
+                        <ul>
+                            <li><a href="../releases/">Release Information</a></li>
+                            <li><a href="../releng/">Release Engineering</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li><a href="../docs.html">Documentation</a>
+                        <ul>
+                            <li><a href="../doc/en_US.ISO8859-1/books/faq/">FAQ</a></li>
+                            <li><a href="../doc/en_US.ISO8859-1/books/handbook/">Handbook</a></li>
+                            <li><a href="../doc/en_US.ISO8859-1/books/porters-handbook">Porter's Handbook</a></li>
+                            <li><a href="../doc/en_US.ISO8859-1/books/developers-handbook">Developer's Handbook</a></li>
+                            <li><a href="../cgi/man.cgi">Manual Pages</a></li>
+                            <li><a href="../doc/en_US.ISO8859-1/books/fdp-primer">Documentation Project Primer</a></li>
+                            <li><a href="../docs/books.html">All Books and Articles</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li><a href="../community.html">Community</a>
+                        <ul>
+                            <li><a href="../community/mailinglists.html">Mailing Lists</a></li>
+                            <li><a href="https://forums.FreeBSD.org">Forums</a></li>
+                            <li><a href="../usergroups.html">User Groups</a></li>
+                            <li><a href="../events/events.html">Events</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li><a href="../projects/index.html">Developers</a>
+                        <ul>
+                            <li><a href="../projects/ideas/ideas.html">Project Ideas</a></li>
+                            <li><a href="//svnweb.FreeBSD.org">SVN Repository</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li><a href="../support.html">Support</a>
+                        <ul>
+                            <li><a href="../commercial/commercial.html">Vendors</a></li>
+                            <li><a href="//security.FreeBSD.org/">Security Information</a></li>
+                            <li><a href="https://bugs.freebsd.org/search/">Bug Reports</a></li>
+                            <li><a href="../support.html">Submit Bug-report</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li><a href="//www.freebsdfoundation.org/">Foundation</a>
+                        <ul>
+                            <li><a href="//www.freebsdfoundation.org/donate/">Donate</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div> <!-- MENU -->
+        </div>
+
+        <div id="content">
+
+            <h1>FreeBSD Manual Pages</h1>
+
+            <form id="man" method="get" action="/cgi/man.cgi">
+                <!-- Manual Page or Keyword Search: -->
+                <span class="spaces">&nbsp;&nbsp;</span>
+                <input type="text" id="query" value="updatedb" name="query" size="36" autocapitalize="none"  />
+                <button type="submit" name="apropos" value="0">man</button>
+                <button type="submit" name="apropos" value="1">apropos</button>
+                <br/>
+                <span class="space">&nbsp;</span><br/>
+                <span class="spaces">&nbsp;&nbsp;</span>
+                <select name="sektion">
+                    <option value="0">All Sections</option>
+                    <option value="1">1 - General Commands</option>
+                    <option value="2">2 - System Calls</option>
+                    <option value="3">3 - Subroutines</option>
+                    <option value="4">4 - Special Files</option>
+                    <option value="5">5 - File Formats</option>
+                    <option value="6">6 - Games</option>
+                    <option value="7">7 - Macros and Conventions</option>
+                    <option value="8">8 - Maintenance Commands</option>
+                    <option value="9">9 - Kernel Interface</option>
+                    <option value="n">n - New Commands</option>
+                </select>
+                <select name="manpath">
+                    <option value="FreeBSD 12.1-RELEASE">FreeBSD 12.1-RELEASE</option>
+                    <option selected="selected" value="FreeBSD 12.1-RELEASE and Ports">FreeBSD 12.1-RELEASE and Ports</option>
+                    <option value="FreeBSD 12.1-stable">FreeBSD 12.1-stable</option>
+                    <option value="FreeBSD 12.0-RELEASE">FreeBSD 12.0-RELEASE</option>
+                    <option value="FreeBSD 12.0-RELEASE and Ports">FreeBSD 12.0-RELEASE and Ports</option>
+                    <option value="FreeBSD 11.3-RELEASE">FreeBSD 11.3-RELEASE</option>
+                    <option value="FreeBSD 11.3-RELEASE and Ports">FreeBSD 11.3-RELEASE and Ports</option>
+                    <option value="FreeBSD 11.3-stable">FreeBSD 11.3-stable</option>
+                    <option value="FreeBSD 11.2-RELEASE">FreeBSD 11.2-RELEASE</option>
+                    <option value="FreeBSD 11.2-RELEASE and Ports">FreeBSD 11.2-RELEASE and Ports</option>
+                    <option value="FreeBSD 11.1-RELEASE">FreeBSD 11.1-RELEASE</option>
+                    <option value="FreeBSD 11.1-RELEASE and Ports">FreeBSD 11.1-RELEASE and Ports</option>
+                    <option value="FreeBSD 11.0-RELEASE">FreeBSD 11.0-RELEASE</option>
+                    <option value="FreeBSD 11.0-RELEASE and Ports">FreeBSD 11.0-RELEASE and Ports</option>
+                    <option value="FreeBSD 10.4-RELEASE">FreeBSD 10.4-RELEASE</option>
+                    <option value="FreeBSD 10.4-RELEASE and Ports">FreeBSD 10.4-RELEASE and Ports</option>
+                    <option value="FreeBSD 10.4-stable">FreeBSD 10.4-stable</option>
+                    <option value="FreeBSD 10.3-RELEASE">FreeBSD 10.3-RELEASE</option>
+                    <option value="FreeBSD 10.3-RELEASE and Ports">FreeBSD 10.3-RELEASE and Ports</option>
+                    <option value="FreeBSD 10.2-RELEASE">FreeBSD 10.2-RELEASE</option>
+                    <option value="FreeBSD 10.2-RELEASE and Ports">FreeBSD 10.2-RELEASE and Ports</option>
+                    <option value="FreeBSD 10.1-RELEASE">FreeBSD 10.1-RELEASE</option>
+                    <option value="FreeBSD 10.1-RELEASE and Ports">FreeBSD 10.1-RELEASE and Ports</option>
+                    <option value="FreeBSD 10.0-RELEASE">FreeBSD 10.0-RELEASE</option>
+                    <option value="FreeBSD 10.0-RELEASE and Ports">FreeBSD 10.0-RELEASE and Ports</option>
+                    <option value="FreeBSD 13-current">FreeBSD 13-current</option>
+                    <option value="FreeBSD 9.3-RELEASE">FreeBSD 9.3-RELEASE</option>
+                    <option value="FreeBSD 9.3-RELEASE and Ports">FreeBSD 9.3-RELEASE and Ports</option>
+                    <option value="FreeBSD 9.2-RELEASE">FreeBSD 9.2-RELEASE</option>
+                    <option value="FreeBSD 9.2-RELEASE and Ports">FreeBSD 9.2-RELEASE and Ports</option>
+                    <option value="FreeBSD 9.1-RELEASE">FreeBSD 9.1-RELEASE</option>
+                    <option value="FreeBSD 9.1-RELEASE and Ports">FreeBSD 9.1-RELEASE and Ports</option>
+                    <option value="FreeBSD 9.0-RELEASE">FreeBSD 9.0-RELEASE</option>
+                    <option value="FreeBSD 9.0-RELEASE and Ports">FreeBSD 9.0-RELEASE and Ports</option>
+                    <option value="FreeBSD 8.4-RELEASE">FreeBSD 8.4-RELEASE</option>
+                    <option value="FreeBSD 8.4-RELEASE and Ports">FreeBSD 8.4-RELEASE and Ports</option>
+                    <option value="FreeBSD 8.3-RELEASE">FreeBSD 8.3-RELEASE</option>
+                    <option value="FreeBSD 8.3-RELEASE and Ports">FreeBSD 8.3-RELEASE and Ports</option>
+                    <option value="FreeBSD 8.2-RELEASE">FreeBSD 8.2-RELEASE</option>
+                    <option value="FreeBSD 8.2-RELEASE and Ports">FreeBSD 8.2-RELEASE and Ports</option>
+                    <option value="FreeBSD 8.1-RELEASE">FreeBSD 8.1-RELEASE</option>
+                    <option value="FreeBSD 8.1-RELEASE and Ports">FreeBSD 8.1-RELEASE and Ports</option>
+                    <option value="FreeBSD 8.0-RELEASE">FreeBSD 8.0-RELEASE</option>
+                    <option value="FreeBSD 8.0-RELEASE and Ports">FreeBSD 8.0-RELEASE and Ports</option>
+                    <option value="FreeBSD 7.4-RELEASE">FreeBSD 7.4-RELEASE</option>
+                    <option value="FreeBSD 7.4-RELEASE and Ports">FreeBSD 7.4-RELEASE and Ports</option>
+                    <option value="FreeBSD 7.4-stable">FreeBSD 7.4-stable</option>
+                    <option value="FreeBSD 7.3-RELEASE">FreeBSD 7.3-RELEASE</option>
+                    <option value="FreeBSD 7.3-RELEASE and Ports">FreeBSD 7.3-RELEASE and Ports</option>
+                    <option value="FreeBSD 7.2-RELEASE">FreeBSD 7.2-RELEASE</option>
+                    <option value="FreeBSD 7.2-RELEASE and Ports">FreeBSD 7.2-RELEASE and Ports</option>
+                    <option value="FreeBSD 7.1-RELEASE">FreeBSD 7.1-RELEASE</option>
+                    <option value="FreeBSD 7.1-RELEASE and Ports">FreeBSD 7.1-RELEASE and Ports</option>
+                    <option value="FreeBSD 7.0-RELEASE">FreeBSD 7.0-RELEASE</option>
+                    <option value="FreeBSD 6.4-RELEASE">FreeBSD 6.4-RELEASE</option>
+                    <option value="FreeBSD 6.4-RELEASE and Ports">FreeBSD 6.4-RELEASE and Ports</option>
+                    <option value="FreeBSD 6.3-RELEASE">FreeBSD 6.3-RELEASE</option>
+                    <option value="FreeBSD 6.3-RELEASE and Ports">FreeBSD 6.3-RELEASE and Ports</option>
+                    <option value="FreeBSD 6.2-RELEASE">FreeBSD 6.2-RELEASE</option>
+                    <option value="FreeBSD 6.1-RELEASE">FreeBSD 6.1-RELEASE</option>
+                    <option value="FreeBSD 6.0-RELEASE">FreeBSD 6.0-RELEASE</option>
+                    <option value="FreeBSD 6.0-RELEASE and Ports">FreeBSD 6.0-RELEASE and Ports</option>
+                    <option value="FreeBSD 5.5-RELEASE">FreeBSD 5.5-RELEASE</option>
+                    <option value="FreeBSD 5.5-RELEASE and Ports">FreeBSD 5.5-RELEASE and Ports</option>
+                    <option value="FreeBSD 5.4-RELEASE">FreeBSD 5.4-RELEASE</option>
+                    <option value="FreeBSD 5.4-RELEASE and Ports">FreeBSD 5.4-RELEASE and Ports</option>
+                    <option value="FreeBSD 5.3-RELEASE">FreeBSD 5.3-RELEASE</option>
+                    <option value="FreeBSD 5.3-RELEASE and Ports">FreeBSD 5.3-RELEASE and Ports</option>
+                    <option value="FreeBSD 5.2.1-RELEASE">FreeBSD 5.2.1-RELEASE</option>
+                    <option value="FreeBSD 5.2.1-RELEASE and Ports">FreeBSD 5.2.1-RELEASE and Ports</option>
+                    <option value="FreeBSD 5.2-RELEASE">FreeBSD 5.2-RELEASE</option>
+                    <option value="FreeBSD 5.2-RELEASE and Ports">FreeBSD 5.2-RELEASE and Ports</option>
+                    <option value="FreeBSD 5.1-RELEASE">FreeBSD 5.1-RELEASE</option>
+                    <option value="FreeBSD 5.0-RELEASE">FreeBSD 5.0-RELEASE</option>
+                    <option value="FreeBSD 4.11-RELEASE">FreeBSD 4.11-RELEASE</option>
+                    <option value="FreeBSD 4.11-RELEASE and Ports">FreeBSD 4.11-RELEASE and Ports</option>
+                    <option value="FreeBSD 4.10-RELEASE">FreeBSD 4.10-RELEASE</option>
+                    <option value="FreeBSD 4.10-RELEASE and Ports">FreeBSD 4.10-RELEASE and Ports</option>
+                    <option value="FreeBSD 4.9-RELEASE">FreeBSD 4.9-RELEASE</option>
+                    <option value="FreeBSD 4.9-RELEASE and Ports">FreeBSD 4.9-RELEASE and Ports</option>
+                    <option value="FreeBSD 4.8-RELEASE">FreeBSD 4.8-RELEASE</option>
+                    <option value="FreeBSD 4.8-RELEASE and Ports">FreeBSD 4.8-RELEASE and Ports</option>
+                    <option value="FreeBSD 4.7-RELEASE">FreeBSD 4.7-RELEASE</option>
+                    <option value="FreeBSD 4.6.2-RELEASE">FreeBSD 4.6.2-RELEASE</option>
+                    <option value="FreeBSD 4.6.2-RELEASE and Ports">FreeBSD 4.6.2-RELEASE and Ports</option>
+                    <option value="FreeBSD 4.6-RELEASE">FreeBSD 4.6-RELEASE</option>
+                    <option value="FreeBSD 4.6-RELEASE and Ports">FreeBSD 4.6-RELEASE and Ports</option>
+                    <option value="FreeBSD 4.5-RELEASE">FreeBSD 4.5-RELEASE</option>
+                    <option value="FreeBSD 4.5-RELEASE and Ports">FreeBSD 4.5-RELEASE and Ports</option>
+                    <option value="FreeBSD 4.4-RELEASE">FreeBSD 4.4-RELEASE</option>
+                    <option value="FreeBSD 4.3-RELEASE">FreeBSD 4.3-RELEASE</option>
+                    <option value="FreeBSD 4.3-RELEASE and Ports">FreeBSD 4.3-RELEASE and Ports</option>
+                    <option value="FreeBSD 4.2-RELEASE">FreeBSD 4.2-RELEASE</option>
+                    <option value="FreeBSD 4.2-RELEASE and Ports">FreeBSD 4.2-RELEASE and Ports</option>
+                    <option value="FreeBSD 4.1.1-RELEASE">FreeBSD 4.1.1-RELEASE</option>
+                    <option value="FreeBSD 4.1.1-RELEASE and Ports">FreeBSD 4.1.1-RELEASE and Ports</option>
+                    <option value="FreeBSD 4.1-RELEASE">FreeBSD 4.1-RELEASE</option>
+                    <option value="FreeBSD 4.0-RELEASE">FreeBSD 4.0-RELEASE</option>
+                    <option value="FreeBSD 3.5.1-RELEASE">FreeBSD 3.5.1-RELEASE</option>
+                    <option value="FreeBSD 3.5.1-RELEASE and Ports">FreeBSD 3.5.1-RELEASE and Ports</option>
+                    <option value="FreeBSD 3.5-RELEASE and Ports">FreeBSD 3.5-RELEASE and Ports</option>
+                    <option value="FreeBSD 3.4-RELEASE">FreeBSD 3.4-RELEASE</option>
+                    <option value="FreeBSD 3.4-RELEASE and Ports">FreeBSD 3.4-RELEASE and Ports</option>
+                    <option value="FreeBSD 3.3-RELEASE">FreeBSD 3.3-RELEASE</option>
+                    <option value="FreeBSD 3.2-RELEASE">FreeBSD 3.2-RELEASE</option>
+                    <option value="FreeBSD 3.1-RELEASE">FreeBSD 3.1-RELEASE</option>
+                    <option value="FreeBSD 3.0-RELEASE">FreeBSD 3.0-RELEASE</option>
+                    <option value="FreeBSD 2.2.8-RELEASE">FreeBSD 2.2.8-RELEASE</option>
+                    <option value="FreeBSD 2.2.8-RELEASE and Ports">FreeBSD 2.2.8-RELEASE and Ports</option>
+                    <option value="FreeBSD 2.2.7-RELEASE">FreeBSD 2.2.7-RELEASE</option>
+                    <option value="FreeBSD 2.2.6-RELEASE">FreeBSD 2.2.6-RELEASE</option>
+                    <option value="FreeBSD 2.2.5-RELEASE">FreeBSD 2.2.5-RELEASE</option>
+                    <option value="FreeBSD 2.2.2-RELEASE">FreeBSD 2.2.2-RELEASE</option>
+                    <option value="FreeBSD 2.2.1-RELEASE">FreeBSD 2.2.1-RELEASE</option>
+                    <option value="FreeBSD 2.1.7.1-RELEASE">FreeBSD 2.1.7.1-RELEASE</option>
+                    <option value="FreeBSD 2.1.6.1-RELEASE">FreeBSD 2.1.6.1-RELEASE</option>
+                    <option value="FreeBSD 2.1.5-RELEASE">FreeBSD 2.1.5-RELEASE</option>
+                    <option value="FreeBSD 2.1.0-RELEASE">FreeBSD 2.1.0-RELEASE</option>
+                    <option value="FreeBSD 2.0.5-RELEASE">FreeBSD 2.0.5-RELEASE</option>
+                    <option value="FreeBSD 2.0-RELEASE">FreeBSD 2.0-RELEASE</option>
+                    <option value="FreeBSD 1.1.5.1-RELEASE">FreeBSD 1.1.5.1-RELEASE</option>
+                    <option value="FreeBSD 1.1-RELEASE">FreeBSD 1.1-RELEASE</option>
+                    <option value="FreeBSD 1.0-RELEASE">FreeBSD 1.0-RELEASE</option>
+                    <option value="FreeBSD Ports 12.1">FreeBSD Ports 12.1</option>
+                    <option value="FreeBSD Ports 12.0">FreeBSD Ports 12.0</option>
+                    <option value="FreeBSD Ports 11.3">FreeBSD Ports 11.3</option>
+                    <option value="FreeBSD Ports 11.2">FreeBSD Ports 11.2</option>
+                    <option value="FreeBSD Ports 11.1">FreeBSD Ports 11.1</option>
+                    <option value="FreeBSD Ports 11.0">FreeBSD Ports 11.0</option>
+                    <option value="FreeBSD Ports 10.4">FreeBSD Ports 10.4</option>
+                    <option value="FreeBSD Ports 10.3">FreeBSD Ports 10.3</option>
+                    <option value="FreeBSD Ports 10.2">FreeBSD Ports 10.2</option>
+                    <option value="FreeBSD Ports 10.1">FreeBSD Ports 10.1</option>
+                    <option value="FreeBSD Ports 10.0">FreeBSD Ports 10.0</option>
+                    <option value="FreeBSD Ports 9.3">FreeBSD Ports 9.3</option>
+                    <option value="FreeBSD Ports 9.2">FreeBSD Ports 9.2</option>
+                    <option value="FreeBSD Ports 9.1">FreeBSD Ports 9.1</option>
+                    <option value="FreeBSD Ports 9.0">FreeBSD Ports 9.0</option>
+                    <option value="FreeBSD Ports 8.4">FreeBSD Ports 8.4</option>
+                    <option value="FreeBSD Ports 8.3">FreeBSD Ports 8.3</option>
+                    <option value="FreeBSD Ports 8.2">FreeBSD Ports 8.2</option>
+                    <option value="FreeBSD Ports 8.1">FreeBSD Ports 8.1</option>
+                    <option value="FreeBSD Ports 8.0">FreeBSD Ports 8.0</option>
+                    <option value="FreeBSD Ports 7.4">FreeBSD Ports 7.4</option>
+                    <option value="FreeBSD Ports 7.3">FreeBSD Ports 7.3</option>
+                    <option value="FreeBSD Ports 7.2">FreeBSD Ports 7.2</option>
+                    <option value="FreeBSD Ports 7.1">FreeBSD Ports 7.1</option>
+                    <option value="FreeBSD Ports 7.0">FreeBSD Ports 7.0</option>
+                    <option value="FreeBSD Ports 6.4">FreeBSD Ports 6.4</option>
+                    <option value="FreeBSD Ports 6.3">FreeBSD Ports 6.3</option>
+                    <option value="FreeBSD Ports 6.2">FreeBSD Ports 6.2</option>
+                    <option value="FreeBSD Ports 6.0">FreeBSD Ports 6.0</option>
+                    <option value="FreeBSD Ports 5.5">FreeBSD Ports 5.5</option>
+                    <option value="FreeBSD Ports 5.4">FreeBSD Ports 5.4</option>
+                    <option value="FreeBSD Ports 5.3">FreeBSD Ports 5.3</option>
+                    <option value="FreeBSD Ports 5.2.1">FreeBSD Ports 5.2.1</option>
+                    <option value="FreeBSD Ports 5.2">FreeBSD Ports 5.2</option>
+                    <option value="FreeBSD Ports 5.1">FreeBSD Ports 5.1</option>
+                    <option value="FreeBSD Ports 4.11">FreeBSD Ports 4.11</option>
+                    <option value="FreeBSD Ports 4.10">FreeBSD Ports 4.10</option>
+                    <option value="FreeBSD Ports 4.9">FreeBSD Ports 4.9</option>
+                    <option value="FreeBSD Ports 4.8">FreeBSD Ports 4.8</option>
+                    <option value="FreeBSD Ports 4.7">FreeBSD Ports 4.7</option>
+                    <option value="FreeBSD Ports 4.6.2">FreeBSD Ports 4.6.2</option>
+                    <option value="FreeBSD Ports 4.6">FreeBSD Ports 4.6</option>
+                    <option value="FreeBSD Ports 4.5">FreeBSD Ports 4.5</option>
+                    <option value="FreeBSD Ports 4.3">FreeBSD Ports 4.3</option>
+                    <option value="FreeBSD Ports 4.2">FreeBSD Ports 4.2</option>
+                    <option value="FreeBSD Ports 4.1.1">FreeBSD Ports 4.1.1</option>
+                    <option value="FreeBSD Ports 3.5.1">FreeBSD Ports 3.5.1</option>
+                    <option value="FreeBSD Ports 3.5">FreeBSD Ports 3.5</option>
+                    <option value="FreeBSD Ports 3.4">FreeBSD Ports 3.4</option>
+                    <option value="FreeBSD Ports 2.2.8">FreeBSD Ports 2.2.8</option>
+                    <option value="4.4BSD Lite2">4.4BSD Lite2</option>
+                    <option value="4.3BSD NET/2">4.3BSD NET/2</option>
+                    <option value="4.3BSD Reno">4.3BSD Reno</option>
+                    <option value="2.11 BSD">2.11 BSD</option>
+                    <option value="2.10 BSD">2.10 BSD</option>
+                    <option value="2.9.1 BSD">2.9.1 BSD</option>
+                    <option value="2.8 BSD">2.8 BSD</option>
+                    <option value="386BSD 0.1">386BSD 0.1</option>
+                    <option value="386BSD 0.0">386BSD 0.0</option>
+                    <option value="CentOS 7.1">CentOS 7.1</option>
+                    <option value="CentOS 7.0">CentOS 7.0</option>
+                    <option value="CentOS 6.6">CentOS 6.6</option>
+                    <option value="CentOS 6.5">CentOS 6.5</option>
+                    <option value="CentOS 6.4">CentOS 6.4</option>
+                    <option value="CentOS 6.3">CentOS 6.3</option>
+                    <option value="CentOS 6.2">CentOS 6.2</option>
+                    <option value="CentOS 6.1">CentOS 6.1</option>
+                    <option value="CentOS 6.0">CentOS 6.0</option>
+                    <option value="CentOS 5.11">CentOS 5.11</option>
+                    <option value="CentOS 5.10">CentOS 5.10</option>
+                    <option value="CentOS 5.9">CentOS 5.9</option>
+                    <option value="CentOS 5.8">CentOS 5.8</option>
+                    <option value="CentOS 5.7">CentOS 5.7</option>
+                    <option value="CentOS 5.6">CentOS 5.6</option>
+                    <option value="CentOS 5.5">CentOS 5.5</option>
+                    <option value="CentOS 5.4">CentOS 5.4</option>
+                    <option value="CentOS 4.8">CentOS 4.8</option>
+                    <option value="CentOS 3.9">CentOS 3.9</option>
+                    <option value="Darwin 8.0.1/ppc">Darwin 8.0.1/ppc</option>
+                    <option value="Darwin 7.0.1">Darwin 7.0.1</option>
+                    <option value="Darwin 6.0.2/x86">Darwin 6.0.2/x86</option>
+                    <option value="Darwin 1.4.1/x86">Darwin 1.4.1/x86</option>
+                    <option value="Darwin 1.3.1/x86">Darwin 1.3.1/x86</option>
+                    <option value="Debian 8.1.0">Debian 8.1.0</option>
+                    <option value="Debian 7.8.0">Debian 7.8.0</option>
+                    <option value="Debian 6.0.10">Debian 6.0.10</option>
+                    <option value="Debian 5.0.10">Debian 5.0.10</option>
+                    <option value="Debian 4.0.9">Debian 4.0.9</option>
+                    <option value="Debian 3.1.8">Debian 3.1.8</option>
+                    <option value="Debian 2.2.7">Debian 2.2.7</option>
+                    <option value="HP-UX 11.22">HP-UX 11.22</option>
+                    <option value="HP-UX 11.20">HP-UX 11.20</option>
+                    <option value="HP-UX 11.11">HP-UX 11.11</option>
+                    <option value="HP-UX 11.00">HP-UX 11.00</option>
+                    <option value="HP-UX 10.20">HP-UX 10.20</option>
+                    <option value="HP-UX 10.10">HP-UX 10.10</option>
+                    <option value="HP-UX 10.01">HP-UX 10.01</option>
+                    <option value="HP-UX 9.07">HP-UX 9.07</option>
+                    <option value="HP-UX 8.07">HP-UX 8.07</option>
+                    <option value="IRIX 6.5.30">IRIX 6.5.30</option>
+                    <option value="Linux Slackware 3.1">Linux Slackware 3.1</option>
+                    <option value="MACH 2.5/i386">MACH 2.5/i386</option>
+                    <option value="Minix 2.0">Minix 2.0</option>
+                    <option value="NetBSD 8.1">NetBSD 8.1</option>
+                    <option value="NetBSD 8.0">NetBSD 8.0</option>
+                    <option value="NetBSD 7.1">NetBSD 7.1</option>
+                    <option value="NetBSD 7.0">NetBSD 7.0</option>
+                    <option value="NetBSD 6.1.5">NetBSD 6.1.5</option>
+                    <option value="NetBSD 6.0">NetBSD 6.0</option>
+                    <option value="NetBSD 5.1">NetBSD 5.1</option>
+                    <option value="NetBSD 5.0">NetBSD 5.0</option>
+                    <option value="NetBSD 4.0.1">NetBSD 4.0.1</option>
+                    <option value="NetBSD 4.0">NetBSD 4.0</option>
+                    <option value="NetBSD 3.1">NetBSD 3.1</option>
+                    <option value="NetBSD 3.0">NetBSD 3.0</option>
+                    <option value="NetBSD 2.1">NetBSD 2.1</option>
+                    <option value="NetBSD 2.0.2">NetBSD 2.0.2</option>
+                    <option value="NetBSD 2.0">NetBSD 2.0</option>
+                    <option value="NetBSD 1.6.2">NetBSD 1.6.2</option>
+                    <option value="NetBSD 1.6.1">NetBSD 1.6.1</option>
+                    <option value="NetBSD 1.6">NetBSD 1.6</option>
+                    <option value="NetBSD 1.5.3">NetBSD 1.5.3</option>
+                    <option value="NetBSD 1.5.2">NetBSD 1.5.2</option>
+                    <option value="NetBSD 1.5.1">NetBSD 1.5.1</option>
+                    <option value="NetBSD 1.5">NetBSD 1.5</option>
+                    <option value="NetBSD 1.4.3">NetBSD 1.4.3</option>
+                    <option value="NetBSD 1.4.2">NetBSD 1.4.2</option>
+                    <option value="NetBSD 1.4.1">NetBSD 1.4.1</option>
+                    <option value="NetBSD 1.4">NetBSD 1.4</option>
+                    <option value="NetBSD 1.3.3">NetBSD 1.3.3</option>
+                    <option value="NetBSD 1.3.2">NetBSD 1.3.2</option>
+                    <option value="NetBSD 1.3.1">NetBSD 1.3.1</option>
+                    <option value="NetBSD 1.3">NetBSD 1.3</option>
+                    <option value="NetBSD 1.2.1">NetBSD 1.2.1</option>
+                    <option value="NetBSD 1.2">NetBSD 1.2</option>
+                    <option value="NetBSD 1.1">NetBSD 1.1</option>
+                    <option value="NetBSD 1.0">NetBSD 1.0</option>
+                    <option value="NeXTSTEP 3.3">NeXTSTEP 3.3</option>
+                    <option value="OpenBSD 6.5">OpenBSD 6.5</option>
+                    <option value="OpenBSD 6.4">OpenBSD 6.4</option>
+                    <option value="OpenBSD 6.3">OpenBSD 6.3</option>
+                    <option value="OpenBSD 6.2">OpenBSD 6.2</option>
+                    <option value="OpenBSD 6.1">OpenBSD 6.1</option>
+                    <option value="OpenBSD 6.0">OpenBSD 6.0</option>
+                    <option value="OpenBSD 5.9">OpenBSD 5.9</option>
+                    <option value="OpenBSD 5.8">OpenBSD 5.8</option>
+                    <option value="OpenBSD 5.7">OpenBSD 5.7</option>
+                    <option value="OpenBSD 5.6">OpenBSD 5.6</option>
+                    <option value="OpenBSD 5.5">OpenBSD 5.5</option>
+                    <option value="OpenBSD 5.4">OpenBSD 5.4</option>
+                    <option value="OpenBSD 5.3">OpenBSD 5.3</option>
+                    <option value="OpenBSD 5.2">OpenBSD 5.2</option>
+                    <option value="OpenBSD 5.1">OpenBSD 5.1</option>
+                    <option value="OpenBSD 5.0">OpenBSD 5.0</option>
+                    <option value="OpenBSD 4.9">OpenBSD 4.9</option>
+                    <option value="OpenBSD 4.8">OpenBSD 4.8</option>
+                    <option value="OpenBSD 4.7">OpenBSD 4.7</option>
+                    <option value="OpenBSD 4.6">OpenBSD 4.6</option>
+                    <option value="OpenBSD 4.5">OpenBSD 4.5</option>
+                    <option value="OpenBSD 4.4">OpenBSD 4.4</option>
+                    <option value="OpenBSD 4.3">OpenBSD 4.3</option>
+                    <option value="OpenBSD 4.2">OpenBSD 4.2</option>
+                    <option value="OpenBSD 4.1">OpenBSD 4.1</option>
+                    <option value="OpenBSD 4.0">OpenBSD 4.0</option>
+                    <option value="OpenBSD 3.9">OpenBSD 3.9</option>
+                    <option value="OpenBSD 3.8">OpenBSD 3.8</option>
+                    <option value="OpenBSD 3.7">OpenBSD 3.7</option>
+                    <option value="OpenBSD 3.6">OpenBSD 3.6</option>
+                    <option value="OpenBSD 3.5">OpenBSD 3.5</option>
+                    <option value="OpenBSD 3.4">OpenBSD 3.4</option>
+                    <option value="OpenBSD 3.3">OpenBSD 3.3</option>
+                    <option value="OpenBSD 3.2">OpenBSD 3.2</option>
+                    <option value="OpenBSD 3.1">OpenBSD 3.1</option>
+                    <option value="OpenBSD 3.0">OpenBSD 3.0</option>
+                    <option value="OpenBSD 2.9">OpenBSD 2.9</option>
+                    <option value="OpenBSD 2.8">OpenBSD 2.8</option>
+                    <option value="OpenBSD 2.7">OpenBSD 2.7</option>
+                    <option value="OpenBSD 2.6">OpenBSD 2.6</option>
+                    <option value="OpenBSD 2.5">OpenBSD 2.5</option>
+                    <option value="OpenBSD 2.4">OpenBSD 2.4</option>
+                    <option value="OpenBSD 2.3">OpenBSD 2.3</option>
+                    <option value="OpenBSD 2.2">OpenBSD 2.2</option>
+                    <option value="OpenBSD 2.1">OpenBSD 2.1</option>
+                    <option value="OpenBSD 2.0">OpenBSD 2.0</option>
+                    <option value="OpenDarwin 7.2.1">OpenDarwin 7.2.1</option>
+                    <option value="OpenDarwin 6.6.2/x86">OpenDarwin 6.6.2/x86</option>
+                    <option value="OpenStep 4.2">OpenStep 4.2</option>
+                    <option value="OSF1 V5.1/alpha">OSF1 V5.1/alpha</option>
+                    <option value="OSF1 V4.0/alpha">OSF1 V4.0/alpha</option>
+                    <option value="OSF1 V1.0/mips">OSF1 V1.0/mips</option>
+                    <option value="OpenDarwin 20030208pre4/ppc">OpenDarwin 20030208pre4/ppc</option>
+                    <option value="OpenDarwin 6.6.1/x86">OpenDarwin 6.6.1/x86</option>
+                    <option value="Plan 9">Plan 9</option>
+                    <option value="Red Hat 8.0">Red Hat 8.0</option>
+                    <option value="Red Hat 7.3">Red Hat 7.3</option>
+                    <option value="Red Hat 7.2">Red Hat 7.2</option>
+                    <option value="Red Hat 7.1">Red Hat 7.1</option>
+                    <option value="Red Hat 7.0">Red Hat 7.0</option>
+                    <option value="Red Hat 6.2">Red Hat 6.2</option>
+                    <option value="Red Hat 6.1">Red Hat 6.1</option>
+                    <option value="Red Hat 5.2">Red Hat 5.2</option>
+                    <option value="Red Hat 5.0">Red Hat 5.0</option>
+                    <option value="Red Hat 4.2">Red Hat 4.2</option>
+                    <option value="Red Hat 9">Red Hat 9</option>
+                    <option value="Rhapsody DR1">Rhapsody DR1</option>
+                    <option value="Rhapsody DR2">Rhapsody DR2</option>
+                    <option value="Sun UNIX 0.4">Sun UNIX 0.4</option>
+                    <option value="SunOS 5.10">SunOS 5.10</option>
+                    <option value="SunOS 5.9">SunOS 5.9</option>
+                    <option value="SunOS 5.7">SunOS 5.7</option>
+                    <option value="SunOS 5.5.1">SunOS 5.5.1</option>
+                    <option value="SunOS 4.1.3">SunOS 4.1.3</option>
+                    <option value="SuSE 11.3">SuSE 11.3</option>
+                    <option value="SuSE 11.2">SuSE 11.2</option>
+                    <option value="SuSE 11.1">SuSE 11.1</option>
+                    <option value="SuSE 11.0">SuSE 11.0</option>
+                    <option value="SuSE 10.3">SuSE 10.3</option>
+                    <option value="SuSE 10.2">SuSE 10.2</option>
+                    <option value="SuSE 10.1">SuSE 10.1</option>
+                    <option value="SuSE 10.0">SuSE 10.0</option>
+                    <option value="SuSE 9.3">SuSE 9.3</option>
+                    <option value="SuSE 9.2">SuSE 9.2</option>
+                    <option value="SuSE 8.2">SuSE 8.2</option>
+                    <option value="SuSE 8.1">SuSE 8.1</option>
+                    <option value="SuSE 8.0">SuSE 8.0</option>
+                    <option value="SuSE 7.3">SuSE 7.3</option>
+                    <option value="SuSE 7.2">SuSE 7.2</option>
+                    <option value="SuSE 7.1">SuSE 7.1</option>
+                    <option value="SuSE 7.0">SuSE 7.0</option>
+                    <option value="SuSE 6.4">SuSE 6.4</option>
+                    <option value="SuSE 6.3">SuSE 6.3</option>
+                    <option value="SuSE 6.1">SuSE 6.1</option>
+                    <option value="SuSE 6.0">SuSE 6.0</option>
+                    <option value="SuSE 5.3">SuSE 5.3</option>
+                    <option value="SuSE 5.2">SuSE 5.2</option>
+                    <option value="SuSE 5.0">SuSE 5.0</option>
+                    <option value="SuSE 4.3">SuSE 4.3</option>
+                    <option value="SuSE ES 10 SP1">SuSE ES 10 SP1</option>
+                    <option value="SunOS 5.8">SunOS 5.8</option>
+                    <option value="SunOS 5.6">SunOS 5.6</option>
+                    <option value="ULTRIX 4.2">ULTRIX 4.2</option>
+                    <option value="Ultrix-32 2.0/VAX">Ultrix-32 2.0/VAX</option>
+                    <option value="Unix Seventh Edition">Unix Seventh Edition</option>
+                    <option value="X11R7.4">X11R7.4</option>
+                    <option value="X11R7.3.2">X11R7.3.2</option>
+                    <option value="X11R7.2">X11R7.2</option>
+                    <option value="X11R6.9.0">X11R6.9.0</option>
+                    <option value="X11R6.8.2">X11R6.8.2</option>
+                    <option value="X11R6.7.0">X11R6.7.0</option>
+                    <option value="XFree86 4.8.0">XFree86 4.8.0</option>
+                    <option value="XFree86 4.7.0">XFree86 4.7.0</option>
+                    <option value="XFree86 4.6.0">XFree86 4.6.0</option>
+                    <option value="XFree86 4.5.0">XFree86 4.5.0</option>
+                    <option value="XFree86 4.4.0">XFree86 4.4.0</option>
+                    <option value="XFree86 4.3.0">XFree86 4.3.0</option>
+                    <option value="XFree86 4.2.99.3">XFree86 4.2.99.3</option>
+                    <option value="XFree86 4.2.0">XFree86 4.2.0</option>
+                    <option value="XFree86 4.1.0">XFree86 4.1.0</option>
+                    <option value="XFree86 4.0.2">XFree86 4.0.2</option>
+                    <option value="XFree86 4.0.1">XFree86 4.0.1</option>
+                    <option value="XFree86 4.0">XFree86 4.0</option>
+                    <option value="XFree86 3.3.6">XFree86 3.3.6</option>
+                    <option value="XFree86 3.3">XFree86 3.3</option>
+                    <option value="XFree86 2.1">XFree86 2.1</option>
+                </select>
+                <select name="arch">
+                    <option  value="default">All Architectures</option>
+                </select>
+
+                <select name="format">
+                    <option value="html">html</option>
+                    <option value="pdf">pdf</option>
+                    <option value="ascii">ascii</option>
+                </select>
+            </form>
+
+            <br/>
+            <span class="footer_links"><a href="/cgi/man.cgi?manpath=FreeBSD+12.1-RELEASE+and+Ports">home</a> | <a href="/cgi/man.cgi/help.html">help</a></span>
+            <hr/>
+            <pre>
+LOCATE.UPDATEDB(8)	  BSD System Manager's Manual	    LOCATE.UPDATEDB(8)
+
+<a name="xNAME" href="#end"><b>NAME</b></a>
+     <b>locate.updatedb</b> --	update locate database
+
+<a name="SYNOPSIS" href="#end"><b>SYNOPSIS</b></a>
+     <b>/usr/libexec/locate.updatedb</b>
+
+<a name="DESCRIPTION" href="#end"><b>DESCRIPTION</b></a>
+     The <b>locate.updatedb</b> utility updates the database used by <a href="/cgi/man.cgi?query=locate&amp;sektion=1&amp;apropos=0&amp;manpath=FreeBSD+12.1-RELEASE+and+Ports">locate(1)</a>.  It
+     is	typically run once a week by the <i>/etc/periodic/weekly/310.locate</i>
+     script.
+
+     The contents of the newly built database can be controlled	by the
+     <i>/etc/locate.rc</i> file.
+
+<a name="ENVIRONMENT" href="#end"><b>ENVIRONMENT</b></a>
+     <i>LOCATE</i>_<i>CONFIG</i>	      path to the configuration	file
+
+<a name="FILES" href="#end"><b>FILES</b></a>
+     /var/db/locate.database  the default database
+     /etc/locate.rc	      the configuration	file
+
+<a name="SEE_ALSO" href="#end"><b>SEE ALSO</b></a>
+     <a href="/cgi/man.cgi?query=locate&amp;sektion=1&amp;apropos=0&amp;manpath=FreeBSD+12.1-RELEASE+and+Ports">locate(1)</a>,	<a href="/cgi/man.cgi?query=periodic&amp;sektion=8&amp;apropos=0&amp;manpath=FreeBSD+12.1-RELEASE+and+Ports">periodic(8)</a>
+
+     Woods, James A., "Finding Files Fast", <i>;login</i>, 8:1, pp. 8-10, 1983.
+
+BSD			       February	11, 1996			   BSD
+</pre>
+            <a name="end" />
+            <hr />
+            <a href="#NAME">NAME</a> |
+            <a href="#SYNOPSIS">SYNOPSIS</a> |
+            <a href="#DESCRIPTION">DESCRIPTION</a> |
+            <a href="#ENVIRONMENT">ENVIRONMENT</a> |
+            <a href="#FILES">FILES</a> |
+            <a href="#SEE_ALSO">SEE ALSO</a>
+            <p align="left">Want to link to this manual page? Use this URL:<br/>&lt;<a href="https://www.freebsd.org/cgi/man.cgi?query=updatedb&amp;manpath=FreeBSD+12.1-RELEASE+and+Ports">https://www.freebsd.org/cgi/man.cgi?query=updatedb&amp;manpath=FreeBSD+12.1-RELEASE+and+Ports</a>&gt;</p>
+            <span class="footer_links"><a href="/cgi/man.cgi?manpath=">home</a> | <a href="/cgi/man.cgi/help.html">help</a></span>
+            <hr noshade="noshade" />
+        </div>
+        <div id="footer">
+            <a href="../copyright/">Legal Notices</a> | &copy; 1995-2019
+            The FreeBSD Project. All rights reserved.<br />
+            <address><a href='../mailto.html'>Contact</a><br /></address>
+        </div>
+    </div>
+</div>
+</body>
+</html>

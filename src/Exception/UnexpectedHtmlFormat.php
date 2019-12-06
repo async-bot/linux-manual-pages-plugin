@@ -6,6 +6,6 @@ final class UnexpectedHtmlFormat extends Exception
 {
     public function __construct(string $element)
     {
-        parent::__construct(sprintf('Could not find the "%s" element in the row', $element));
+        parent::__construct(sprintf('Could not find the "%s" element in the document', $element));
     }
 }
