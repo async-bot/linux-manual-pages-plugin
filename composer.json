@@ -9,6 +9,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.4",
+        "ext-dom": "*",
         "amphp/amp": "^2.2.0",
         "async-bot/core": "dev-master"
     },

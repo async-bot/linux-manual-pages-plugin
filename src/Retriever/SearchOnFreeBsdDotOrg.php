@@ -4,6 +4,7 @@ namespace AsyncBot\Plugin\LinuxManualPages\Retriever;
 
 use Amp\Promise;
 use AsyncBot\Core\Http\Client;
+use AsyncBot\Plugin\LinuxManualPages\Parser\FreeBsdDotOrg;
 use function Amp\call;
 
 final class SearchOnFreeBsdDotOrg
@@ -21,6 +22,8 @@ final class SearchOnFreeBsdDotOrg
             $dom = yield $this->httpClient->requestHtml(
                 sprintf('https://www.freebsd.org/cgi/man.cgi?query=%s', urlencode($command)),
             );
+
+            return (new FreeBsdDotOrg())->parse($dom);
         });
     }
 }
