@@ -42,7 +42,7 @@ final class FreeBsdDotOrg
 
     private function getShortDescription(\DOMXPath $xpath): string
     {
-        /** @var \DOMNodeList $nameNodes */
+        /** @var \DOMNodeList $descriptionNodes */
         $descriptionNodes = $xpath->evaluate('//a[@name="NAME"]/following-sibling::b/following-sibling::text()');
 
         if (!$descriptionNodes->length) {
@@ -54,7 +54,7 @@ final class FreeBsdDotOrg
 
     private function getLongDescription(\DOMXPath $xpath): string
     {
-        /** @var \DOMNodeList $nameNodes */
+        /** @var \DOMNodeList $descriptionNodes */
         $descriptionNodes = $xpath->evaluate('//a[@name="DESCRIPTION"]');
 
         if (!$descriptionNodes->length) {
@@ -93,7 +93,7 @@ final class FreeBsdDotOrg
 
     private function getSynopsis(\DOMXPath $xpath): string
     {
-        /** @var \DOMNodeList $nameNodes */
+        /** @var \DOMNodeList $synposisNodes */
         $synopsisNodes = $xpath->evaluate('//a[@name="SYNOPSIS"]');
 
         if (!$synopsisNodes->length) {
